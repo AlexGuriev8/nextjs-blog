@@ -18,7 +18,7 @@ export default function Home() {
           textDecoration: "underline",
         }}
       >
-        <Link href="builder-demo">Blog</Link>
+        <Link href="blog">Blog</Link>
       </main>
     </>
   );
