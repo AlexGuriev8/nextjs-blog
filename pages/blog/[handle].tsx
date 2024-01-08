@@ -29,7 +29,7 @@ function BlogArticle({ article }: any) {
     <BuilderContent
       content={article}
       options={{ includeRefs: true }}
-      model="blog-article"
+      model="blog-articles"
     >
       {(data, loading, fullContent) => (
         <React.Fragment>
@@ -56,7 +56,7 @@ function BlogArticle({ article }: any) {
 export async function getStaticProps({ params }: Params) {
   const article =
     (await builder
-      .get("blog-article", {
+      .get("blog-post", {
         // Include references, like our `author` ref
         options: { includeRefs: true },
         query: {

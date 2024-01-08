@@ -35,8 +35,8 @@ function Blog({
                 alt="image"
               />
             </div>
-            {item.data.title}
-            {item.data.description}
+            <p> {item.data.title}</p>
+            <p> {item.data.description}</p>
           </div>
         </Link>
       ))}
@@ -57,7 +57,7 @@ export async function getStaticProps({ query }: { query: string }) {
   // Get the page number from the path or query parameter
   // In this example we are hardcoding it as 1
   const pageNumber = 1;
-  const articles = await builder.getAll("blog-article", {
+  const articles = await builder.getAll("blog-post", {
     // Include references, like the `author` ref
     options: { includeRefs: true },
     // For performance, don't pull the `blocks` (the full blog entry content)
