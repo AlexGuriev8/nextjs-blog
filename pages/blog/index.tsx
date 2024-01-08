@@ -1,7 +1,6 @@
-import builder from "@builder.io/react";
-import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import Image from "next/image";
+import { builder } from "@builder.io/react";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
@@ -11,60 +10,50 @@ function Blog({
   articles,
   pageNumber,
 }: {
-  articles: any[];
+  articles: {
+    data: {
+      handle: string;
+      title: string;
+      image: string;
+      description: string;
+    };
+  }[];
   pageNumber: number;
 }) {
-  return (
-    <div
-      style={{
-        marginTop: 20,
-        textAlign: "center",
-      }}
-    >
-      <h1>Blog</h1>
+  console.log(articles);
 
-      <div
-        style={{
-          display: "flex",
-          gap: 20,
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        {articles.map((item, index) => (
-          <Link href={`/blog/${item.data.handle}`} key={index}>
-            <div style={{ overflow: "hidden", width: 300 }}>
-              <div
-                style={{
-                  display: "block",
-                }}
-              >
-                <Image
-                  src={item.data.image}
-                  width={300}
-                  height={200}
-                  style={{
-                    objectFit: "cover",
-                    width: 300,
-                    height: 200,
-                  }}
-                  alt="item.data"
-                />
-              </div>
-              {item.data.title}
-              {item.data.description}
+  return (
+    <div>
+      {articles.map((item, idx) => (
+        <Link href={`/blog/${item.data.handle}`} key={idx}>
+          <div style={{ overflow: "hidden", width: 300 }}>
+            <div style={{ width: 300, height: 200, display: "block" }}>
+              <Image
+                width={300}
+                height={200}
+                src={item.data.image}
+                alt="image"
+              />
             </div>
-          </Link>
-        ))}
+            {item.data.title}
+            {item.data.description}
+          </div>
+        </Link>
+      ))}
+      <div style={{ padding: 20, width: 300, margin: "auto", display: "flex" }}>
+        {pageNumber > 1 && (
+          <a href={`/blog/page/${pageNumber - 1}`}>‹ Previous page</a>
+        )}
+
+        {articles.length > ARTICLES_PER_PAGE && (
+          <a href={`/blog/page/${pageNumber + 1}`}>Next page ›</a>
+        )}
       </div>
     </div>
   );
 }
 
-export default Blog;
-
-export async function getStaticProps() {
+export async function getStaticProps({ query }: { query: string }) {
   // Get the page number from the path or query parameter
   // In this example we are hardcoding it as 1
   const pageNumber = 1;
@@ -80,3 +69,5 @@ export async function getStaticProps() {
 
   return { props: { articles, pageNumber } };
 }
+
+export default Blog;

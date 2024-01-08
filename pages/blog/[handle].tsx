@@ -13,8 +13,6 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
 function BlogArticle({ article }: any) {
-  console.log(article);
-
   const isPreviewing = useIsPreviewing();
   if (!article && !isPreviewing) {
     return (
@@ -56,8 +54,6 @@ function BlogArticle({ article }: any) {
 }
 
 export async function getStaticProps({ params }: Params) {
-  console.log(params.handle);
-
   const article =
     (await builder
       .get("blog-article", {
