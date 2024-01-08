@@ -43,8 +43,6 @@ function BlogArticle({ article }: any) {
           </Head>
 
           <div>
-            <div>{data?.title}</div>
-            {/* Render the Builder drag/drop'd content */}
             <BuilderComponent
               content={fullContent}
               options={{ includeRefs: true }}
@@ -58,20 +56,7 @@ function BlogArticle({ article }: any) {
 }
 
 export async function getStaticProps({ params }: Params) {
-  console.log(params);
-
-  console.log(
-    await builder
-      .get("blog-article", {
-        // Include references, like our `author` ref
-        options: { includeRefs: true },
-        query: {
-          // Get the specific article by handle
-          name: "first-article",
-        },
-      })
-      .promise()
-  );
+  console.log(params.handle);
 
   const article =
     (await builder
@@ -80,7 +65,7 @@ export async function getStaticProps({ params }: Params) {
         options: { includeRefs: true },
         query: {
           // Get the specific article by handle
-          name: params.handle,
+          "data.handle": params.handle,
         },
       })
       .promise()) || null;

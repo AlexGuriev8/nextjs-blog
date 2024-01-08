@@ -1,4 +1,5 @@
 import builder from "@builder.io/react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -13,33 +14,49 @@ function Blog({
   articles: any[];
   pageNumber: number;
 }) {
-  console.log(articles[0].data);
-
   return (
     <div
       style={{
-        border: "1px solid #ffff",
+        marginTop: 20,
+        textAlign: "center",
       }}
     >
-      {articles.map((item, index) => (
-        <Link href={`/blog/${item.name}`} key={index}>
-          <div style={{ overflow: "hidden", width: 300 }}>
-            <div style={{ width: 300, height: 200, display: "block" }}>
-              <img src={item.data.image} />
-            </div>
-            {item.name}
-            {item.data.description}
-          </div>
-        </Link>
-      ))}
-      <div style={{ padding: 20, width: 300, margin: "auto", display: "flex" }}>
-        {pageNumber > 1 && (
-          <a href={`/blog/page/${pageNumber - 1}`}>‹ Previous page</a>
-        )}
+      <h1>Blog</h1>
 
-        {articles.length > ARTICLES_PER_PAGE && (
-          <a href={`/blog/page/${pageNumber + 1}`}>Next page ›</a>
-        )}
+      <div
+        style={{
+          display: "flex",
+          gap: 20,
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        {articles.map((item, index) => (
+          <Link href={`/blog/${item.data.handle}`} key={index}>
+            <div style={{ overflow: "hidden", width: 300 }}>
+              <div
+                style={{
+                  display: "block",
+                }}
+              >
+                <Image
+                  src={item.data.image}
+                  width={300}
+                  height={200}
+                  style={{
+                    objectFit: "cover",
+                    width: 300,
+                    height: 200,
+                  }}
+                  alt="item.data"
+                />
+              </div>
+              {item.data.title}
+              {item.data.description}
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
