@@ -70,7 +70,7 @@ export const getStaticProps: GetStaticProps = async () => {
     offset: (pageNumber - 1) * ARTICLES_PER_PAGE,
   });
 
-  return { props: { articles, pageNumber } };
+  return { props: { articles, pageNumber }, revalidate: 5 };
 };
 
 export default Blog;
